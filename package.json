@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",
-    "@prisma/client": "^7.2.0",
+    "@prisma/client": "5.9.1",
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/supabase-js": "^2.90.1",
     "@tanstack/react-table": "^8.21.3",
@@ -22,7 +22,7 @@
     "lucide-react": "^0.562.0",
     "next": "16.1.2",
     "pg": "^8.17.1",
-    "prisma": "^6.19.2",
+    "prisma": "^5.9.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "sweetalert2": "^11.26.17",
