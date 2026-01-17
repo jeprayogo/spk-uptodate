@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import * as XLSX from 'xlsx-js-style'
 import { Button } from '@/components/ui/button'
+import { FaRegFileExcel } from "react-icons/fa";
 
 type Props = {
   open: boolean
@@ -137,8 +138,8 @@ export default function ExportSPKModal({ open, onClose }: Props) {
           <Button variant="outline" onClick={onClose} className='hover:cursor-pointer'>
             Cancel
           </Button>
-          <Button onClick={exportExcel} disabled={loading} className='hover:cursor-pointer'>
-            {loading ? 'Exporting...' : 'Export'}
+          <Button variant={'outline'} onClick={exportExcel} disabled={loading} className='hover:cursor-pointer'>
+            <FaRegFileExcel className='w-6 h-6 text-xl text-green-600' /> {loading ? 'Exporting...' : 'Export'}
           </Button>
         </div>
       </div>
