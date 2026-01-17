@@ -130,65 +130,70 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+    <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center">
       {alert.message && <Alert message={alert.message} type={alert.type} />}
+      <Alert message="Test Alert " type="error" />
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6 space-y-5">
         <h1 className="text-2xl font-semibold text-slate-800">Input Catatan Bengkel</h1>
 
         <form onSubmit={submit} className="max-w-xl mx-auto">
           <div className="mb-5">
-            <label className="block mb-2.5 text-sm font-medium text-heading">Nomor Polisi</label>
+            <label htmlFor="nomor_polisi" className="block mb-2.5 text-sm font-medium text-heading">Nomor Polisi</label>
             <input
-              className="bg-neutral-secondary-medium border rounded-lg border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className={`bg-neutral-secondary-medium border ${error.nomor_polisi ? 'border-red-500' : ''} rounded-lg border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body`}
               name="nomor_polisi"
               placeholder="B 1234 XYZ"
               maxLength={11}
               onChange={handleChange}
               value={form.nomor_polisi}
             />
+            {error.nomor_polisi && <p className="mt-2 text-sm text-red-600">{error.nomor_polisi}</p>}
           </div>
-          {error.nomor_polisi && <p className="mt-2 text-sm text-red-600">{error.nomor_polisi}</p>}
+
 
 
           <div className="mb-5">
-            <label className="block mb-2.5 text-sm font-medium text-heading">Nama Bengkel</label>
+            <label htmlFor="nama_bengkel" className="block mb-2.5 text-sm font-medium text-heading">Nama Bengkel</label>
             <input
-              className="bg-neutral-secondary-medium border rounded-lg border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className={`bg-neutral-secondary-medium border ${error.nama_bengkel ? 'border-red-500' : ''} rounded-lg border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body`}
               name="nama_bengkel"
               placeholder="Nama Bengkel"
               onChange={handleChange}
               value={form.nama_bengkel}
             />
+            {error.nama_bengkel && <p className="mt-2 text-sm text-red-600">{error.nama_bengkel}</p>}
           </div>
-          {error.nama_bengkel && <p className="mt-2 text-sm text-red-600">{error.nama_bengkel}</p>}
+
 
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-5">
-              <label className="block mb-2.5 text-sm font-medium text-heading">Jam Masuk</label>
+              <label htmlFor="jam_masuk" className="block mb-2.5 text-sm font-medium text-heading">Jam Masuk</label>
               <input
                 type="datetime-local"
-                className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-lg border ${error.jam_masuk ? 'border-red-500' : ''} px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 name="jam_masuk"
                 onChange={handleChange}
                 value={form.jam_masuk}
               />
+              {error.jam_masuk && <p className="mt-2 text-sm text-red-600">{error.jam_masuk}</p>}
             </div>
-            {error.jam_masuk && <p className="mt-2 text-sm text-red-600">{error.jam_masuk}</p>}
+
 
 
             <div className="mb-5">
-              <label className="block mb-2.5 text-sm font-medium text-heading">Jam Keluar</label>
+              <label htmlFor="jam_keluar" className="block mb-2.5 text-sm font-medium text-heading">Jam Keluar</label>
               <input
                 type="datetime-local"
-                className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-lg border ${error.jam_keluar ? 'border-red-500' : ''} px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 name="jam_keluar"
                 onChange={handleChange}
                 value={form.jam_keluar}
               />
+              {error.jam_keluar && <p className="mt-2 text-sm text-red-600">{error.jam_keluar}</p>}
             </div>
           </div>
-          {error.jam_keluar && <p className="mt-2 text-sm text-red-600">{error.jam_keluar}</p>}
+
 
 
           <div className="space-x-4">
