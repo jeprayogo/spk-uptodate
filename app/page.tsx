@@ -179,12 +179,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-5">
-              <label htmlFor="jam_masuk" className="block mb-2.5 text-sm font-medium text-heading">Jam Masuk</label>
+              <label htmlFor="jam_masuk" className="block mb-2.5 text-sm font-medium text-heading">Jam Mulai (In-Stall)</label>
               <input
                 type="datetime-local"
                 className={`w-full rounded-lg border ${error.jam_masuk ? 'border-red-500' : ''} px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 name="jam_masuk"
-                placeholder="Pilih Jam Masuk"
+                placeholder="Pilih Jam Mulai (In-Stall)"
                 onChange={handleChange}
                 value={form.jam_masuk}
               />
@@ -194,12 +194,12 @@ export default function Home() {
 
 
             <div className="mb-5">
-              <label htmlFor="jam_keluar" className="block mb-2.5 text-sm font-medium text-heading">Jam Keluar</label>
+              <label htmlFor="jam_keluar" className="block mb-2.5 text-sm font-medium text-heading">Jam Selesai (Out-Stall)</label>
               <input
                 type="datetime-local"
                 className={`w-full rounded-lg border ${error.jam_keluar ? 'border-red-500' : ''} px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 name="jam_keluar"
-                placeholder="Pilih Jam Keluar"
+                placeholder="Pilih Jam Selesai (Out-Stall)"
                 onChange={handleChange}
                 value={form.jam_keluar}
               />
