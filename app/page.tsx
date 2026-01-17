@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Alert from "./components/Alert";
 import { Button } from "@/components/ui/button";
 import { Car, Loader2Icon, Wrench } from "lucide-react";
+import { formatNomorPolisi } from "./lib/plate";
 
 export default function Home() {
   const router = useRouter()
@@ -29,6 +30,14 @@ export default function Home() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
+
+    if (name === 'nomor_polisi') {
+      setForm(prev => ({
+        ...prev,
+        nomor_polisi: formatNomorPolisi(value),
+      }))
+      return
+    }
 
     setForm(prevFormData => ({
       ...prevFormData,
