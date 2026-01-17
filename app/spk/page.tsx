@@ -77,7 +77,7 @@ export default function SPK() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const sort = sorting[0]?.id ?? 'created_at'
+      const sort = sorting[0]?.created_at ?? 'created_at'
       const order = sorting[0]?.desc ? 'desc' : 'asc'
 
       const res = await fetch(
