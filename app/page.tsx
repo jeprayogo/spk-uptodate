@@ -106,7 +106,7 @@ export default function Home() {
       resetForm()
       setTimeout(() => router.refresh(), 500);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Terjadi kesalahan menambahkan Member";
+      const message = error instanceof Error ? error.message : "Terjadi kesalahan menambahkan Data";
       setAlert({ message, type: "error" });
     } finally {
       setLoading(false)
