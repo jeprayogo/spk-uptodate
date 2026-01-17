@@ -115,7 +115,7 @@ export default function ExportSPKModal({ open, onClose }: Props) {
         <h1 className="text-xl font-semibold">Export SPK</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="mb-5">
-            <label className="block mb-2.5 text-sm font-medium text-heading">Jam Masuk Awal</label>
+            <label className="block mb-2.5 text-sm font-medium text-heading">Jam Mulai Awal</label>
             <input
               type="date"
               className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -123,7 +123,7 @@ export default function ExportSPKModal({ open, onClose }: Props) {
             />
           </div>
           <div className="mb-5">
-            <label className="block mb-2.5 text-sm font-medium text-heading">Jam Masuk Akhir</label>
+            <label className="block mb-2.5 text-sm font-medium text-heading">Jam Mulai Akhir</label>
             <input
               type="date"
               className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
