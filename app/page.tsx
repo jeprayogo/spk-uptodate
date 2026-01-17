@@ -144,7 +144,7 @@ export default function Home() {
                 <Car color="gray" size={18} />
               </div>
               <input
-                className={`${error.nomor_polisi ? 'border-red-500' : ''} block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body`}
+                className={`${error.nomor_polisi ? 'border-red-500' : ''} block w-full ps-9 pe-3 py-2.5 rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body`}
                 name="nomor_polisi"
                 placeholder="B 1234 XYZ"
                 maxLength={11}
@@ -164,7 +164,7 @@ export default function Home() {
                 <Wrench size={18} color="gray" />
               </div>
               <input
-                className={`${error.nama_bengkel ? 'border-red-500' : ''} block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs `}
+                className={`${error.nama_bengkel ? 'border-red-500' : ''} block w-full ps-9 pe-3 py-2.5 rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs `}
                 name="nama_bengkel"
                 placeholder="Nama Bengkel"
                 onChange={handleChange}
