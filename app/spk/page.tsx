@@ -39,7 +39,7 @@ export default function SPK() {
     { accessorKey: 'nama_bengkel', header: 'Bengkel' },
     {
       accessorKey: 'jam_masuk',
-      header: 'Jam Masuk',
+      header: 'Jam Mulai (In-Stall)',
       cell: info =>
         info.getValue()
           ? new Date(info.getValue() as string).toLocaleString()
@@ -47,7 +47,7 @@ export default function SPK() {
     },
     {
       accessorKey: 'jam_keluar',
-      header: 'Jam Keluar',
+      header: 'Jam Selesai (Out-Stall)',
       cell: info =>
         info.getValue()
           ? new Date(info.getValue() as string).toLocaleString()

@@ -29,10 +29,10 @@ export default function ExportSPKModal({ open, onClose }: Props) {
         json.data.map((d: any) => ({
           'Nomor Polisi': d.nomor_polisi ?? '-',
           'Nama Bengkel': d.nama_bengkel ?? '-',
-          'Jam Masuk': d.jam_masuk
+          'Jam Mulai (In-Stall)': d.jam_masuk
             ? new Date(d.jam_masuk).toLocaleString()
             : '-',
-          'Jam Keluar': d.jam_keluar
+          'Jam Selesai (Out-Stall)': d.jam_keluar
             ? new Date(d.jam_keluar).toLocaleString()
             : '-',
           'Durasi': d.durasi ?? '-',
