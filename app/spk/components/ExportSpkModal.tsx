@@ -134,11 +134,11 @@ export default function ExportSPKModal({ open, onClose }: Props) {
         </div>
 
         <div className="flex justify-end gap-2 pt-2">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={onClose} className='hover:cursor-pointer'>
             Cancel
           </Button>
-          <Button onClick={exportExcel} disabled={loading}>
-            {loading ? 'Exporting...' : 'Export Excel'}
+          <Button onClick={exportExcel} disabled={loading} className='hover:cursor-pointer'>
+            {loading ? 'Exporting...' : 'Export'}
           </Button>
         </div>
       </div>

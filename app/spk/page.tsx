@@ -12,7 +12,9 @@ import {
 } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight, Sheet } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
+import { FaRegFileExcel } from "react-icons/fa";
+import { FcDeleteDatabase } from "react-icons/fc";
 import ExportSPKModal from './components/ExportSpkModal'
 
 type BengkelLog = {
@@ -77,7 +79,7 @@ export default function SPK() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const sort = sorting[0]?.created_at ?? 'created_at'
+      const sort = sorting[0]?.id ?? 'created_at'
       const order = sorting[0]?.desc ? 'desc' : 'asc'
 
       const res = await fetch(
@@ -95,27 +97,32 @@ export default function SPK() {
   return (
     <div className="p-6 space-y-4">
       <div className="flex justify-between">
-        <input
-          className="border rounded px-3 py-2"
-          placeholder="Search..."
-          onChange={e => {
-            setQ(e.target.value)
-            setPage(1)
-          }}
-        />
+        <div className='relative'>
+          <div className='absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none'>
+            <Search size={18} />
+          </div>
+          <input
+            className="block w-full p-3 ps-9 rounded-lg bg-gray-50 border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+            placeholder="Cari Data"
+            onChange={e => {
+              setQ(e.target.value)
+              setPage(1)
+            }}
+          />
+        </div>
         <Button variant="outline" className='hover:cursor-pointer' onClick={() => setExportOpen(true)}>
-          <Sheet size={32} color='green' />  Export
+          <FaRegFileExcel className='w-6 h-6 text-xl text-green-600' /> Export
         </Button>
       </div>
 
-      <table className="w-full border">
-        <thead>
+      <table className="w-full text-sm text-left rtl:text-right text-body border rounded-lg">
+        <thead className='text-heading text-body bg-slate-100 border-b border-default-medium'>
           {table.getHeaderGroups().map(hg => (
             <tr key={hg.id}>
               {hg.headers.map(header => (
                 <th
                   key={header.id}
-                  className="border p-2 cursor-pointer"
+                  className="border p-2 cursor-pointer px-6 py-3 font-bold text-center hover:cursor-pointer"
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   {flexRender(
@@ -132,19 +139,37 @@ export default function SPK() {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id} className="border p-2">
-                  {flexRender(
-                    cell.column.columnDef.cell,
-                    cell.getContext()
-                  )}
-                </td>
-              ))}
+          {table.getRowModel().rows.length === 0 ? (
+            <tr>
+              <td
+                colSpan={columns.length}
+                className="text-center text-lg px-6 py-8 text-gray-500 font-black"
+              >
+                <div className='flex flex-col items-center justify-center'>
+                  <FcDeleteDatabase size={32} className='mb-3' />
+                  Data Kosong
+                </div>
+              </td>
             </tr>
-          ))}
+          ) : (
+            table.getRowModel().rows.map(row => (
+              <tr
+                key={row.id}
+                className="bg-neutral-primary-soft border-b border-default hover:bg-slate-50"
+              >
+                {row.getVisibleCells().map(cell => (
+                  <td key={cell.id} className="border px-6 py-4">
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext()
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))
+          )}
         </tbody>
+
       </table>
 
       {/* Pagination */}

@@ -32,7 +32,7 @@ export async function GET(req: Request) {
         ],
       }),
       ...(startDate && endDate && {
-        created_at: {
+        jam_mulai: {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
