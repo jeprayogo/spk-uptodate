@@ -59,12 +59,12 @@ export default function Home() {
 
     if (!form.jam_masuk) {
       isValidForm = false
-      newError.jam_masuk = 'Jam Masuk Harus Diisi'
+      newError.jam_masuk = 'Jam Mulai (In-Stall) Harus Diisi'
     }
 
     if (!form.jam_keluar) {
       isValidForm = false
-      newError.jam_keluar = 'Jam Keluar Harus Diisi'
+      newError.jam_keluar = 'Jam Selesai (Out-Stall) Harus Diisi'
     }
 
     if (new Date(form.jam_keluar) < new Date(form.jam_masuk)) {
