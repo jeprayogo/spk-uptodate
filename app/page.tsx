@@ -192,7 +192,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center">
       {alert.message && <Alert message={alert.message} type={alert.type} />}
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6 space-y-5">
-        <h1 className="text-2xl font-semibold text-slate-800 text-center">Pencatatan Waktu Perbaikan Kendaraan Aktual Bengkel Rekanan</h1>
+        <h1 className="text-xl font-semibold text-slate-800 text-center">Pencatatan Waktu Perbaikan Kendaraan Aktual Bengkel Rekanan</h1>
         <p className="m-5 text-sm text-center text-slate-600">Silahkan isi data kendaraan dibawah ini</p>
 
         <form onSubmit={submit} className="max-w-xl mx-auto my-5">
