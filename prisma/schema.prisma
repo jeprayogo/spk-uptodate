@@ -13,5 +13,11 @@ model bengkel_log {
   jam_masuk    DateTime? @db.Timestamptz(6)
   jam_keluar   DateTime? @db.Timestamptz(6)
   durasi       String?   @db.VarChar(100)
+  keterangan   String?   @db.Text
+  km_aktual    Int?      
   created_at   DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@index([nomor_polisi])
+  @@index([nama_bengkel])
+  @@index([created_at])
 }

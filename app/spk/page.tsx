@@ -38,6 +38,17 @@ export default function SPK() {
 
   const columns: ColumnDef<BengkelLog>[] = [
     { accessorKey: 'nomor_polisi', header: 'No Polisi' },
+    {
+      accessorKey: 'km_aktual',
+      header: 'KM Aktual',
+      cell: info => {
+        const value = info.getValue()
+
+        if (value === null || value === undefined) return '-'
+
+        return new Intl.NumberFormat('id-ID').format(Number(value))
+      }
+    },
     { accessorKey: 'nama_bengkel', header: 'Bengkel' },
     {
       accessorKey: 'jam_masuk',
@@ -56,6 +67,7 @@ export default function SPK() {
           : '-',
     },
     { accessorKey: 'durasi', header: 'Durasi' },
+    { accessorKey: 'keterangan', header: 'Pekerjaan' },
     {
       accessorKey: 'created_at',
       header: 'Timestamp',

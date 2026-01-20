@@ -95,6 +95,8 @@ export async function POST(req: Request) {
       jam_masuk: jamMasuk,
       jam_keluar: jamKeluar,
       durasi,
+      keterangan: body.keterangan,
+      km_aktual: body.km_aktual
     },
   })
 

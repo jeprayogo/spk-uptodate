@@ -5,8 +5,9 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Alert from "./components/Alert";
 import { Button } from "@/components/ui/button";
-import { Car, Loader2Icon, Wrench } from "lucide-react";
+import { Car, CircleGauge, Loader2Icon, Wrench } from "lucide-react";
 import { formatNomorPolisi } from "./lib/plate";
+import { formatNumber } from "./lib/number_format";
 
 export default function Home() {
   const router = useRouter()
@@ -19,6 +20,8 @@ export default function Home() {
     jam_masuk: '',
     jam_keluar: '',
     durasi: '',
+    keterangan: '',
+    km_aktual: 0,
   });
 
   const [error, setError] = useState<Record<string, string | undefined>>({
@@ -26,10 +29,12 @@ export default function Home() {
     nama_bengkel: '',
     jam_masuk: '',
     jam_keluar: '',
+    keterangan: '',
+    km_aktual: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
 
     if (name === 'nomor_polisi') {
       setForm(prev => ({
@@ -41,9 +46,29 @@ export default function Home() {
 
     setForm(prevFormData => ({
       ...prevFormData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: value
     }));
   };
+
+  const handleKmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/\D/g, '') // hanya angka
+
+    setForm(prev => ({
+      ...prev,
+      km_aktual: rawValue ? Number(rawValue) : 0,
+    }))
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+
+    if (allowedKeys.includes(e.key)) return;
+
+    if (!/^[0-9]$/.test(e.key)) {
+      e.preventDefault();
+      return;
+    }
+  }
 
   const validateForm = () => {
 
@@ -81,9 +106,29 @@ export default function Home() {
       newError.jam_keluar = 'Jam keluar tidak boleh lebih kecil dari jam masuk'
     }
 
+    if (!form.keterangan) {
+      isValidForm = false
+      newError.keterangan = 'Pekerjaan Harus Diisi'
+    } else if (form.keterangan.length >= 1000) {
+      isValidForm = false
+      newError.keterangan = 'Pekerjaan tidak boleh lebih dari 1000 Karakter'
+    }
+
+    if (!form.km_aktual) {
+      isValidForm = false
+      newError.km_aktual = 'KM Aktual Harus Diisi'
+    } else if (form.km_aktual === 0) {
+      isValidForm = false
+      newError.km_aktual = 'KM Aktual harus lebih dari 0'
+    }
+
 
     setError(newError)
     return isValidForm
+  }
+
+  const handleKmBlur = () => {
+    setForm(prev => ({ ...prev }))
   }
 
   const submit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -101,6 +146,7 @@ export default function Home() {
           ...form,
           jam_masuk: new Date(form.jam_masuk),
           jam_keluar: new Date(form.jam_keluar),
+          km_aktual: form.km_aktual
         }),
       })
 
@@ -129,12 +175,16 @@ export default function Home() {
       jam_masuk: '',
       jam_keluar: '',
       durasi: '',
+      keterangan: '',
+      km_aktual: 0
     });
     setError({
       nomor_polisi: '',
       nama_bengkel: '',
       jam_masuk: '',
       jam_keluar: '',
+      keterangan: '',
+      km_aktual: ''
     });
   };
 
@@ -142,10 +192,10 @@ export default function Home() {
     <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center">
       {alert.message && <Alert message={alert.message} type={alert.type} />}
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6 space-y-5">
-        <h1 className="text-2xl font-semibold text-slate-800 text-center">Catatan Bengkel Kendaraan</h1>
+        <h1 className="text-2xl font-semibold text-slate-800 text-center">Pencatatan Waktu Perbaikan Kendaraan Aktual Bengkel Rekanan</h1>
         <p className="m-5 text-sm text-center text-slate-600">Silahkan isi data kendaraan dibawah ini</p>
 
-        <form onSubmit={submit} className="max-w-xl mx-auto">
+        <form onSubmit={submit} className="max-w-xl mx-auto my-5">
           <div className="mb-5">
             <label htmlFor="nomor_polisi" className="block mb-2.5 text-sm font-medium text-heading">Nomor Polisi</label>
             <div className="relative">
@@ -165,6 +215,25 @@ export default function Home() {
           </div>
 
 
+          <div className="mb-5">
+            <label htmlFor="km_aktual" className="block mb-2.5 text-sm font-medium text-heading">KM Aktual</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <CircleGauge color="gray" size={18} />
+              </div>
+              <input
+                className={`${error.km_aktual ? 'border-red-500' : ''} block w-full ps-9 pe-3 py-2.5 rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body`}
+                name="km_aktual"
+                placeholder="20000"
+                onChange={handleKmChange}
+                onKeyDown={handleKeyDown}
+
+                onBlur={handleKmBlur}
+                value={formatNumber(form.km_aktual)}
+              />
+            </div>
+            {error.km_aktual && <p className="mt-2 text-sm text-red-600">{error.km_aktual}</p>}
+          </div>
 
           <div className="mb-5">
             <label htmlFor="nama_bengkel" className="block mb-2.5 text-sm font-medium text-heading">Nama Bengkel</label>
@@ -203,7 +272,7 @@ export default function Home() {
 
 
             <div className="mb-5">
-              <label htmlFor="jam_keluar" className="block mb-2.5 text-sm font-medium text-heading">Jam Selesai (Out-Stall)</label>
+              <label htmlFor="jam_keluar" className="block mb-2.5 text-sm font-medium">Jam Selesai (Out-Stall)</label>
               <input
                 type="datetime-local"
                 className={`w-full rounded-lg border ${error.jam_keluar ? 'border-red-500' : ''} px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -216,7 +285,12 @@ export default function Home() {
             </div>
           </div>
 
+          <div className="mb-5">
+            <label htmlFor="keterangan" className="block mb-2.5 text-sm font-medium">Pekerjaan</label>
+            <textarea name="keterangan" id="keterangan" rows={4} placeholder="Contoh : Berkala 10k, Ganti kopling, Berkala 20k + ganti wiper, dll." className={`w-full border ${error.keterangan ? 'border-red-500' : ''} text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-3.5 shadow-xs placeholder:text-body`} onChange={handleChange} value={form.keterangan}></textarea>
+            {error.keterangan && <p className="mt-2 text-sm text-red-600">{error.keterangan}</p>}
 
+          </div>
 
           <div className="space-x-4">
             {loading ? (

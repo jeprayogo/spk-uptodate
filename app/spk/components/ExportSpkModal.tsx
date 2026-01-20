@@ -5,6 +5,7 @@ import { useState } from 'react'
 import * as XLSX from 'xlsx-js-style'
 import { Button } from '@/components/ui/button'
 import { FaRegFileExcel } from "react-icons/fa";
+import { formatNumber } from '@/app/lib/number_format';
 
 type Props = {
   open: boolean
@@ -29,6 +30,7 @@ export default function ExportSPKModal({ open, onClose }: Props) {
       const worksheet = XLSX.utils.json_to_sheet(
         json.data.map((d: any) => ({
           'Nomor Polisi': d.nomor_polisi ?? '-',
+          'KM Aktual': formatNumber(d.km_aktual),
           'Nama Bengkel': d.nama_bengkel ?? '-',
           'Jam Mulai (In-Stall)': d.jam_masuk
             ? new Date(d.jam_masuk).toLocaleString()
@@ -37,6 +39,7 @@ export default function ExportSPKModal({ open, onClose }: Props) {
             ? new Date(d.jam_keluar).toLocaleString()
             : '-',
           'Durasi': d.durasi ?? '-',
+          'Pekerjaan': d.keterangan ?? '-',
           'Timestamp': d.created_at
             ? new Date(d.created_at).toLocaleString()
             : '-',
@@ -56,7 +59,7 @@ export default function ExportSPKModal({ open, onClose }: Props) {
 
         cell.s = {
           font: { bold: true },
-          alignment: { horizontal: 'center', vertical: 'center' },
+          alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
           border: {
             top: { style: 'thin' },
             bottom: { style: 'thin' },
@@ -76,7 +79,7 @@ export default function ExportSPKModal({ open, onClose }: Props) {
           if (!cell) continue
 
           cell.s = {
-            alignment: { vertical: 'center' },
+            alignment: { vertical: 'center', wrapText: true },
             border: {
               top: { style: 'thin' },
               bottom: { style: 'thin' },
@@ -92,12 +95,16 @@ export default function ExportSPKModal({ open, onClose }: Props) {
       ========================= */
       worksheet['!cols'] = [
         { wch: 15 }, // nomor_polisi
+        { wch: 15 }, // km_aktual
         { wch: 25 }, // nama_bengkel
         { wch: 22 }, // jam_masuk
         { wch: 22 }, // jam_keluar
-        { wch: 15 }, // durasi
+        { wch: 22 }, // durasi
+        { wch: 25 }, // keterangan
         { wch: 25 }, // created_at
       ]
+
+      // worksheet['!rows'] = new Array(range.e.r + 1).fill({ hpt: 24 })
 
       const workbook = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(workbook, worksheet, 'SPK')
